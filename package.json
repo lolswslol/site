@@ -9,6 +9,8 @@
   "author": "Yuri Zmachinsky",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "mongoose": "^4.10.8",
+    "nodemon": "^1.11.0"
   }
 }
