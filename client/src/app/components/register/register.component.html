@@ -1,0 +1,56 @@
+<h1 class="page-header">Register Route</h1>
+<form [formGroup]="form" (submit)="onRegistrySubmit()">
+  <div class="form-group">
+    <label for="registerEmail">Электронная почта</label>
+    <div [ngClass]="{'has-danger':(form.controls.email.errors && form.controls.email.dirty),'has-success':!form.controls.email.errors}">
+      <input  type="email" class="form-control" id="registerEmail" aria-describedby="emailHelp" placeholder="ваш e-mail..." formControlName="email">
+      <ul>
+        <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty" class="form-control-feedback">Это обязательное поле</li>
+        <li *ngIf="(form.controls.email.errors?.minlength || form.controls.email.errors?.maxlength)&& form.controls.email.dirty" class="form-control-feedback">Не меньше 5 символов и не более 30</li>
+        <li *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty" class="form-control-feedback">Должен быть корректный e-mail</li>
+      </ul>
+
+      <!--<div *ngIf="form.controls.email.errors?.required && form.controls.email.dirty" class="form-control-feedback">Это обязательное поле</div>-->
+    </div>
+
+  </div>
+  <div class="form-group">
+    <label for="registerUsername">Имя пользователя</label>
+    <div [ngClass]="{'has-danger':(form.controls.username.errors && form.controls.username.dirty),'has-success':!form.controls.username.errors}">
+      <input  type="text" class="form-control" id="registerUsername" aria-describedby="usernameHelp" placeholder="имя пользователя..." formControlName="username">
+      <ul>
+        <li *ngIf="form.controls.username.errors?.required && form.controls.username.dirty" class="form-control-feedback">Это обязательное поле</li>
+        <li *ngIf="(form.controls.username.errors?.minlength || form.controls.username.errors?.maxlength)&&form.controls.username.dirty" class="form-control-feedback">Не меньше 5 символов и не более 30</li>
+        <li *ngIf="form.controls.username.errors?.validateUsername &&form.controls.username.dirty" class="form-control-feedback">Имя пользователя не должно содержать спец символов</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div [ngClass]="{'has-danger':(form.controls.password.errors && form.controls.password.dirty),'has-success':!form.controls.password.errors}">
+      <label for="registerPassword">Пароль</label>
+      <input  type="password" class="form-control" id="registerPassword" aria-describedby="passwordHelp" placeholder="ваш пароль..." formControlName="password">
+      <ul>
+        <li *ngIf="form.controls.password.errors?.required && form.controls.password.dirty" class="form-control-feedback">Это обязательное поле</li>
+        <li *ngIf="(form.controls.password.errors?.minlength || form.controls.password.errors?.maxlength)&&form.controls.password.dirty" class="form-control-feedback">Не меньше 5 символов и не более 30</li>
+        <li *ngIf="form.controls.password.errors?.validatePassword &&form.controls.password.dirty" class="form-control-feedback">Пароль должен содержать корректные символы</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="confirmRegisterPassword">Повторный ввод пароля</label>
+    <div [ngClass]="{'has-danger':(form.controls.confirmPassword.errors && form.controls.confirmPassword.dirty)||(form.errors&&form.controls.confirmPassword.dirty),'has-success':!form.controls.confirmPassword.errors}">
+      <input type="password" class="form-control" id="confirmRegisterPassword" aria-describedby="confirmPasswordHelp" placeholder="ваш пароль еще раз..." formControlName="confirmPassword">
+      <ul>
+        <li *ngIf="form.controls.confirmPassword.errors?.required && form.controls.confirmPassword.dirty" class="form-control-feedback">Это обязательное поле</li>
+        <li *ngIf="form.errors?.matchingPassword && form.controls.confirmPassword.dirty" class="form-control-feedback">Пароли не совпадают</li>
+
+      </ul>
+    </div>
+  </div>
+  <input [disabled]="!form.valid" type="submit" class="btn btn-primary" value="Отправить">
+
+</form>
+
+
