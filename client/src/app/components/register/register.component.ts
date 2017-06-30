@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { AuthService } from "../../services/auth.service";
+import 'rxjs/operator/map';
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -9,10 +12,16 @@ import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   form:FormGroup;
+  message;
+  messageClass;
+  emailValid;
+  emailMessage;
+  usernameValid;
+  usernameMessage;
 
 
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private authService:AuthService, private router:Router) {
     this.createForm();
   }
 
@@ -83,12 +92,61 @@ export class RegisterComponent implements OnInit {
       }
     }
   }
+//Checkers
+  checkEmail(){
+    const email = this.form.get('email').value;
+    this.authService.checkEmail(email).subscribe(data=>{
+      let emailData= data.json();
+      console.log(emailData);
+      if(!emailData.success){
+        this.emailValid=false;
+        this.emailMessage=emailData.message;
+      }else {
+        this.emailValid=true;
+        this.emailMessage=emailData.message;
+      }
+    });
+  }
 
+  checkUsername(){
+    const username = this.form.get('username').value;
+    this.authService.checkUsername(username).subscribe(data=>{
+      let usernameData= data.json();
+      console.log(usernameData);
+      if(!usernameData.success){
+        this.usernameValid=false;
+        this.usernameMessage=usernameData.message;
+      }else {
+        this.usernameValid=true;
+        this.usernameMessage=usernameData.message;
+      }
+    });
+  }
 
 
 
   onRegistrySubmit(){
-    console.log(this.form);
+    const user = {
+      email: this.form.get('email').value,
+      username: this.form.get('username').value,
+      password:this.form.get('password').value
+    };
+
+    this.authService.registerUser(user)
+        .subscribe((data:any)=>{
+          let messageData=data.json();
+          if(!messageData.success){
+            this.messageClass='alert alert-danger';
+            this.message=messageData.message;
+          }else {
+            this.messageClass='alert alert-success';
+            this.message=messageData.message;
+            setTimeout(()=>{
+              this.router.navigate(['/login'])
+            },2000);
+          }
+          console.log(data.json())});
+
   }
 
 

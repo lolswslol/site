@@ -37,6 +37,44 @@ module.exports=(router)=>{
 
     });
 
+    router.get('/checkEmail/:email',(req,res)=>{
+        if(!req.params.email){
+            res.json({success:false,message:'E-mail не отправлен'})
+        }else {
+            User.findOne({email: req.params.email},(err,email)=>{
+                if(err){
+                    res.json({success:false,message:'Ups, error'})
+                }else {
+                    if(email){
+                        res.json({success:false,message:'E-mail уже занят'})
+                    }else {
+                        res.json({success:true,message:'E-mail доступен'})
+                    }
+                }
+            })
+
+        }
+    });
+
+    router.get('/checkUsername/:username',(req,res)=>{
+        if(!req.params.username){
+            res.json({success:false,message:'Имя пользователя не отправлены'})
+        }else {
+            User.findOne({username:req.params.username},(err,user)=>{
+                if(err){
+                    res.json({success:false,message:err})
+                }else {
+                    if(user){
+                        res.json({success:false,message:'Имя пользователя уже занято'})
+                    }else {
+                        res.json({success:true,message:'Имя пользователя доступено'})
+                    }
+                }
+            })
+
+        }
+    });
+
 
     return router
 };

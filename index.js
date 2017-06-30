@@ -6,6 +6,7 @@ const config = require('./config/database');
 const path = require('path');
 const authentication = require('./routes/authentication')(router);
 const bodyParser=require('body-parser');
+const cors = require('cors');
 
 
 mongoose.Promise = global.Promise;
@@ -17,6 +18,13 @@ mongoose.connect(config.uri,(err)=>{
     }
 });
 
+const corsOptions = {
+    origin:'',
+    optionsSuccessStatus:200
+};
+app.use(cors({
+    origin:'http://localhost:4200'
+}));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname+'/client/dist/'));
