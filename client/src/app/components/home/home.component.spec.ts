@@ -32,13 +32,4 @@ describe('HomeComponent(inline template)', () => {
     fixture.detectChanges();
     expect(el.textContent).toContain('Wow, its another title');
   });
- /* beforeEach(() => {
-
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should be created', () => {
-    expect(component).toBeTruthy();
-  });*/
 });
