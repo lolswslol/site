@@ -1,0 +1,27 @@
+<h1 class="page-header">Login Route</h1>
+<div class="row show-hide-message">
+  <div [ngClass]="messageClass">
+    {{message}}
+  </div>
+</div>
+
+<form [formGroup]="form" (submit)="onLoginSubmit()">
+
+  <div class="form-group">
+    <label for="registerUsername">Имя пользователя</label>
+    <div>
+      <input  type="text" class="form-control" id="registerUsername" aria-describedby="usernameHelp" placeholder="имя пользователя..." formControlName="username">
+
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div>
+      <label for="registerPassword">Пароль</label>
+      <input  type="password" class="form-control" id="registerPassword" aria-describedby="passwordHelp" placeholder="ваш пароль..." formControlName="password">
+    </div>
+  </div>
+
+  <input type="submit" class="btn btn-primary" value="Отправить">
+
+</form>

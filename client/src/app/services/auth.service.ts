@@ -1,13 +1,32 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import {Http, Headers, RequestOptions, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {Observable} from "rxjs";
 
 @Injectable()
 export class AuthService {
 
   domain = 'http://localhost:8080';
+  authToken;
+  user;
+  options;
 
   constructor(private http:Http) {
+
+  }
+
+  loadToken(){
+    this.authToken=localStorage.getItem('token');
+  }
+
+  createAuthenticationHeaders(){
+    this.loadToken();
+    this.options=new RequestOptions({
+      headers: new Headers({
+        'Content-Type':'application/json',
+        'authorization': this.authToken
+      })
+    })
 
   }
 
@@ -24,6 +43,23 @@ export class AuthService {
   checkEmail(email){
     return this.http.get(this.domain+"/authentication/checkEmail/"+ email,email);
 
+  }
+
+  login(user):Observable<Response>{
+    return this.http.post(this.domain+'/authentication/login',user)
+
+  }
+
+  storeUserData(token,user){
+    localStorage.setItem('token',token);
+    localStorage.setItem('user',JSON.stringify(user));
+    this.authToken=token;
+    this.user = user;
+  }
+
+  getProfile(){
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain+'/authentication/profile',this.options)
   }
 
 }

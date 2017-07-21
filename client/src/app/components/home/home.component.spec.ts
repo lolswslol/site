@@ -9,15 +9,21 @@ describe('HomeComponent(inline template)', () => {
   let de: DebugElement;
   let el: HTMLElement;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ]
-    });
-    fixture = TestBed.createComponent(HomeComponent);
-    component=fixture.componentInstance;
+    })
+      .compileComponents();
+  }));
 
-    de=fixture.debugElement.query(By.css('h1'));
-    el=de.nativeElement;
+  beforeEach(() => {
+    fixture = TestBed.createComponent(HomeComponent);
+
+    component = fixture.componentInstance; // BannerComponent test instance
+
+    // query for the title <h1> by CSS element selector
+    de = fixture.debugElement.query(By.css('h1'));
+    el = de.nativeElement;
   });
 
   it('no title in the DOM until manually call `detectChanges`', () => {
