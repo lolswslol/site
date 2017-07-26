@@ -1,0 +1,92 @@
+<h1 class="page-header">Blog Feed</h1>
+
+<!--
+<div class="row show-hide-message">
+  <div [NgClass]="messageClass">
+    {{message}}
+  </div>
+</div>
+-->
+
+
+<!--new Blog Form start-->
+<form [formGroup]="form" name="blogForm" (submit)="onBlogSubmit()" *ngIf="newPost">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <div [ngClass]="{'has-success':form.controls.title.valid,'has-danger':form.controls.title.dirty && form.controls.title.errors}">
+      <input type="text" name="title" class="form-control" placeholder="*Blog title" autocomplete="off" formControlName="title">
+      <ul class="form-control-feedback">
+        <li *ngIf="form.controls.title.dirty && form.controls.title.errors?.required">Title is required</li>
+        <li *ngIf="(form.controls.title.dirty && form.controls.title.errors?.minlength)||(form.controls.title.dirty && form.controls.title.errors?.maxlength)">Title must be at least 3 and no more then 60</li>
+        <li *ngIf="(form.controls.title.dirty && form.controls.title.errors?.alphaNumericValidation)">Title must be letter or title</li>
+      </ul>
+    </div>
+
+    <label for="body">Body</label>
+    <div [ngClass]="{'has-success':form.controls.body.valid,'has-danger':form.controls.body.dirty && form.controls.body.errors}">
+      <textarea name="body" rows="8" cols="80" placeholder="*Body" class="form-control" formControlName="body"></textarea>
+      <ul class="form-control-feedback">
+        <li *ngIf="form.controls.body.dirty && form.controls.body.errors?.required">Body is required</li>
+        <li *ngIf="(form.controls.body.dirty && form.controls.body.errors?.minlength)||(form.controls.body.dirty && form.controls.body.errors?.maxlength)">Body must be at least 5 and no more then 500</li>
+      </ul>
+    </div>
+  </div>
+  <button [disabled]="processing" type="button" class="btn btn-info" (click)="goBack()">Back</button>
+  <button [disabled]="processing || !form.valid" type="submit" class="btn btn-success">Submit</button>
+
+</form>
+
+
+<!--new Blog Form end-->
+
+
+<button type="button" name="button" class="btn btn-warning" *ngIf="!newPost" (click)="newBlogForm()">New Post</button>
+<button [disabled]="loadingBlogs" type="button" name="button-reload" class="btn btn-default" *ngIf="!newPost" (click)="reloadsBlogs()">Reload</button>
+<br/>
+<br/>
+<div *ngIf="!newPost">
+  <div class="card">
+    <div class="card-block">
+      <h3 class="card-title">Post Title</h3>
+      <p class="card-text">Sample Text</p>
+
+
+    </div>
+    <div class="card-footer">
+      <div><strong>created by:</strong>Yuri</div>
+      <div><strong>date:</strong>12.12.2001</div>
+      <div>Likes:N</div>
+      <div>Dislikes:N</div>
+      <button type="button" class="btn btn-sm btn-info">Edit</button>
+      <button type="button" class="btn btn-sm btn-danger">Delete</button>
+      <!--Likes dropwdown-->
+      <div class="dropdown">
+        <button type="button" name="button" class="btn btn-sm btn-success">Likes: 21</button>
+        <div class="dropdown-content">
+          <a href="#">jinjer</a>
+          <a href="#">Mike</a>
+          <a href="#">Sousa</a>
+        </div>
+      </div>
+      <!--Dislikes dropdown-->
+      <div class="dropdown">
+        <button type="button" name="button" class="btn btn-sm btn-warning">Dislikes: 11</button>
+        <div class="dropdown-content">
+          <a href="#">jinjer</a>
+          <a href="#">Mike</a>
+        </div>
+      </div>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <button type="button" name="button" class="btn btn-sm btn-danger" (click)="dratComment()">Post Comment</button>
+        <br/>
+        <!--<form>
+          <textarea name="comment" rows="10" cols="30" class="form-control"></textarea>
+          <button type="button" class="btn btn-sm btn-success">Submit comment</button>
+          <button type="button" class="btn btn-sm btn-danger">Cancel comment</button>
+        </form>-->
+      </li>
+    </ul>
+  </div>
+</div>

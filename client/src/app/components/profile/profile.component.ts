@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
+import {AuthGuard} from "../../guards/auth.guard";
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,10 @@ export class ProfileComponent implements OnInit {
         this.username=profile.user.username;
         this.email=profile.user.email;
       })
+  }
+
+  check(){
+    console.log(this.authService.isLoggedIn())
   }
 
 }
