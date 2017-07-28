@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from "../../services/auth.service";
+import {BlogService} from "../../services/blog.service";
 
 @Component({
   selector: 'app-blog',
@@ -14,8 +16,9 @@ export class BlogComponent implements OnInit {
   loadingBlogs= false;
   form;
   processing = false;
+  username;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private blogService: BlogService) {
     this.createNewBlogForm();
   }
 
@@ -56,14 +59,41 @@ export class BlogComponent implements OnInit {
   onBlogSubmit(){
    this.processing=true;
    this.disableFormNewBlogForm();
+
    const blog = {
      title: this.form.get('title').value,
      body: this.form.get('body').value,
-   }
+     createdBy: this.username
+   };
+
+   this.blogService.newBlog(blog)
+     .subscribe(jsondata=>{
+       let data = jsondata.json();
+       if(!data.success){
+         this.messageClass='alert alert-danger';
+         this.message=data.message;
+         this.processing=false;
+         this.enableFormNewBlogForm();
+       }else {
+         this.messageClass='alert alert-success';
+         this.message=data.message;
+         setTimeout(()=>{
+           this.newPost=false;
+           this.processing=false;
+           this.message=false;
+           this.form.reset();
+           this.enableFormNewBlogForm();
+         },2000)
+       }
+     })
   }
 
 
   ngOnInit() {
+    this.authService.getProfile().subscribe(data=>{
+      let profile=data.json();
+      this.username=profile.user.username;
+    })
   }
 
   newBlogForm(){

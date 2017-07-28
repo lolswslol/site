@@ -28,7 +28,6 @@ export class AuthService {
         'authorization': this.authToken
       })
     })
-
   }
 
   registerUser(user){

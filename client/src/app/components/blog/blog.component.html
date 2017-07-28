@@ -1,12 +1,10 @@
 <h1 class="page-header">Blog Feed</h1>
 
-<!--
-<div class="row show-hide-message">
-  <div [NgClass]="messageClass">
+<div class="row show-hide-message" *ngIf="message && newPost">
+  <div [ngClass]="messageClass">
     {{message}}
   </div>
 </div>
--->
 
 
 <!--new Blog Form start-->
