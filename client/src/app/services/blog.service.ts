@@ -25,4 +25,39 @@ export class BlogService {
     return this.http.post(this.domain+'/blogs/newBlog',blog,this.options)
   }
 
+  getAllBlogs(){
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain+'/blogs/AllBlogs',this.options).map(res=>res.json());
+  }
+
+  getSingleBlog(id){
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain+'/blogs/singleBlog/'+id,this.options).map(res=>res.json());
+  }
+
+  editBlog(blog){
+    this.createAuthenticationHeaders();
+    return this.http.put(this.domain+'/blogs/updateBlog/',blog,this.options).map(res=>res.json());
+  }
+
+  deleteBlog(id){
+    this.createAuthenticationHeaders();
+    return this.http.delete(this.domain+'/blogs/deleteBlog/'+id,this.options).map(res=>res.json());
+  }
+
+
+  likeBlog(id){
+    const blog ={id:id};
+    /*this.createAuthenticationHeaders();*/
+    return this.http.put(this.domain+'/blogs/likeBlog',blog,this.options)
+      .map(res=>res.json());
+  }
+
+  dislikeBlog(id){
+    const blog ={id:id};
+    /*this.createAuthenticationHeaders();*/
+    return this.http.put(this.domain+'/blogs/dislikeBlog',blog,this.options)
+      .map(res=>res.json());
+  }
+
 }

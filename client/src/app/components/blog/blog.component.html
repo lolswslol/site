@@ -42,24 +42,24 @@
 <button [disabled]="loadingBlogs" type="button" name="button-reload" class="btn btn-default" *ngIf="!newPost" (click)="reloadsBlogs()">Reload</button>
 <br/>
 <br/>
-<div *ngIf="!newPost">
-  <div class="card">
+<div *ngIf="!newPost" >
+  <div *ngFor="let blog of blogPosts" class="card">
     <div class="card-block">
-      <h3 class="card-title">Post Title</h3>
-      <p class="card-text">Sample Text</p>
+      <h3 class="card-title">{{blog.title}}</h3>
+      <p class="card-text">{{blog.body}}</p>
 
 
     </div>
     <div class="card-footer">
-      <div><strong>created by:</strong>Yuri</div>
-      <div><strong>date:</strong>12.12.2001</div>
-      <div>Likes:N</div>
-      <div>Dislikes:N</div>
-      <button type="button" class="btn btn-sm btn-info">Edit</button>
-      <button type="button" class="btn btn-sm btn-danger">Delete</button>
+      <div><strong>created by: </strong>{{blog.createdBy}}</div>
+      <div><strong>date: </strong>{{blog.createdAt | date: 'MMM dd, yyyy'}}</div>
+      <div>Likes:{{blog.likes}}</div>
+      <div>Dislikes:{{blog.dislikes}}</div>
+      <a [routerLink]="['/edit-blog',blog._id]" *ngIf="username===blog.createdBy"><button type="button" class="btn btn-sm btn-info">Edit</button></a>
+      <a [routerLink]="['/delete-blog',blog._id]" *ngIf="username===blog.createdBy"><button type="button" class="btn btn-sm btn-danger">Delete</button></a>
       <!--Likes dropwdown-->
       <div class="dropdown">
-        <button type="button" name="button" class="btn btn-sm btn-success">Likes: 21</button>
+        <button type="button" name="button" class="btn btn-sm btn-success" (click)="likeBlog(blog._id)">Likes: {{blog.likes}}</button>
         <div class="dropdown-content">
           <a href="#">jinjer</a>
           <a href="#">Mike</a>
@@ -68,7 +68,7 @@
       </div>
       <!--Dislikes dropdown-->
       <div class="dropdown">
-        <button type="button" name="button" class="btn btn-sm btn-warning">Dislikes: 11</button>
+        <button type="button" name="button" class="btn btn-sm btn-warning" (click)="dislikeBlog(blog._id)">Dislikes: {{blog.dislikes}}</button>
         <div class="dropdown-content">
           <a href="#">jinjer</a>
           <a href="#">Mike</a>

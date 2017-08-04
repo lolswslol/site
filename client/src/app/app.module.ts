@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { NotAuthGuard } from './guards/notAuth.guard';
 import { BlogComponent } from './components/blog/blog.component';
 import {BlogService} from "./services/blog.service";
+import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.component';
+import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import {BlogService} from "./services/blog.service";
     LoginComponent,
     ProfileComponent,
     BlogComponent,
+    EditBlogComponent,
+    DeleteBlogComponent,
 
   ],
   imports: [
@@ -34,7 +38,8 @@ import {BlogService} from "./services/blog.service";
     ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
-    FlashMessagesModule
+    FlashMessagesModule,
+    FormsModule
   ],
   providers: [AuthService, AuthGuard,NotAuthGuard,BlogService],
   bootstrap: [AppComponent]
