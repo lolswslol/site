@@ -293,5 +293,47 @@ router.put('/likeBlog',(req,res)=>{
     });
 
 
+    router.post('/comment',(req,res)=>{
+        if(!req.body.comment){
+            res.json({success:false, message:'No comment was provided'})
+        }else {
+            if(!req.body.id){
+                res.json({success:false, messsage:'No blog id was provided'})
+            }else {
+                Blog.findOne({_id:req.body.id},(err,blog)=>{
+                    if(err){
+                        res.json({success:false,message:'Wrong blog id'})
+                    }else {
+                        if(!blog){
+                            res.json({success:false,message:'Blog not found'})
+                        }else{
+                            User.findOne({_id:req.decoded.userId},(err,user)=>{
+                                if(err){
+                                    res.json({success:false,message:'Something went wrong'})
+                                }else {
+                                    if(!user){
+                                        res.json({success:false,message:'User not found'})
+                                    }else {
+                                        blog.comments.push({
+                                            comment:req.body.comment,
+                                            commentator:user.username
+                                        });
+                                        blog.save((err)=>{
+                                            if(err){
+                                                res.json({success:false, message:'Cant save comment'})
+                                            }else {
+                                                res.json({success:true, message:'Comment has been saved'})
+                                            }
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+        }
+    });
+
 return router
 };

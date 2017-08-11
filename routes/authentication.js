@@ -138,5 +138,27 @@ module.exports=(router)=>{
     });
 
 
+    router.get('/publicProfile/:username',(req,res)=>{
+        if(!req.params){
+            res.json({success:false, message:'No params was provided'})
+        }else {
+            User.findOne({username:req.params.username}).select('username email').exec((err,user)=>{
+                if(err){
+                    res.json({success:false,message:'Something goes wrong'})
+                }else {
+                    if(!user){
+                        res.json({success:false,message:'Cant fine this user'})
+                    }else {
+                        res.json({
+                            success:true,user:user
+                        })
+                    }
+                }
+            });
+        }
+
+    });
+
+
     return router
 };
