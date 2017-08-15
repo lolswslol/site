@@ -19,6 +19,8 @@ import {BlogService} from "./services/blog.service";
 import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.component';
 import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.component';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
+import { NavbarFormingComponent } from './components/navbar-forming/navbar-forming.component';
+import { FooterFormingComponent } from './components/footer-forming/footer-forming.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { PublicProfileComponent } from './components/public-profile/public-profi
     EditBlogComponent,
     DeleteBlogComponent,
     PublicProfileComponent,
+    NavbarFormingComponent,
+    FooterFormingComponent,
 
   ],
   imports: [
